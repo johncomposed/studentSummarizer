@@ -1,0 +1,68 @@
+#wrapper
+  != partial("_dashSidebar")
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1 Dashboard
+    .row
+      .col-sm-6
+        #dataTables-example_length.dataTables_length
+          label
+            | Show
+            select.form-control.input-sm
+              option(value='10') 10
+              option(value='25') 25
+              option(value='50') 50
+              option(value='100') 100
+            |  entries
+      .col-sm-6
+        #dataTables-example_filter.dataTables_filter
+          button(type='button', ng-click='newStudent()') Add Student
+    .row
+      .col-lg-12
+        #shieldui-grid1.sui-grid.sui-grid-core
+          .sui-gridheader
+            table.sui-table.sui-non-selectable
+              colgroup
+                col(style='width:70px')
+                col
+                col
+                col(style='width:270px')
+              thead
+                tr.sui-columnheader
+                  th.sui-headercell(data-field='id')
+                    a.sui-link(href='#') ID
+                  th.sui-headercell(data-field='name')
+                    a.sui-link(href='#') Person Name
+                  th.sui-headercell(data-field='company')
+                    a.sui-link(href='#') Company Name
+                  th.sui-headercell(data-field='email')
+                    a.sui-link(href='#') Email Address
+          .sui-gridcontent
+            table.sui-table.sui-hover.sui-selectable
+              colgroup
+                col(style='width:70px')
+                col
+                col
+                col(style='width:270px')
+              tbody
+                h1(ng-hide="students.length > 0") Add a student with the button above!
+                tr.sui-row(ng-repeat='tab in students track by $index', ng-show="students.length > 0")
+                  td.sui-cell 0
+                  td.sui-cell <a href="#/edit/{{tab.uuid}}">{{tab.name}}</a>
+                  td.sui-cell Mitroc
+                  td.sui-cell
+                    button(ng-click="storage.deleteStudent(tab);") Delete
+          .sui-pager.sui-pager-core
+            ul.sui-pagination
+              li.sui-pager-element.sui-disabled
+                a.sui-first(title='Go to the first page', data-page='1') «
+              li.sui-pager-element.sui-disabled
+                a.sui-prev(title='Go to the previous page', data-page='0') ‹
+              li.sui-pager-element
+                a.sui-pager-number.sui-selected(data-page='1') 1
+              li.sui-pager-element
+                a.sui-next(title='Go to the next page', data-page='2') ›
+              li.sui-pager-element
+                a.sui-last(title='Go to the last page', data-page='41') »
+            .sui-pager-info-box

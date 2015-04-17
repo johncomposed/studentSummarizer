@@ -1,0 +1,8 @@
+#row(ng-init="initFillForm()")
+  .col-md-6
+    form
+      p bla bla bla
+      div(sf-schema='schema', sf-form='form', sf-model='model')
+      button(type='button', ng-click='saveForm()') Save form
+  .col-md-6
+    != partial("_formPreview")

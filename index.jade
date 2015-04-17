@@ -1,0 +1,35 @@
+doctype
+html(ng:app)
+  head
+    title Coop Admin App
+    //Styles
+    link(rel='stylesheet', type='text/css', href='bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='bootstrap/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', type='text/css', href='http://www.shieldui.com/shared/components/latest/css/shieldui-all.min.css')
+    link(rel='stylesheet', type='text/css', href='http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css')
+
+
+    link(rel="stylesheet" href="css/local.css")
+    link(rel="stylesheet" href="css/style.css")
+
+    //Javascript
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/classlist/2014.01.31/classList.min.js")
+    script(type='text/javascript', src='bower_components/angular/angular.js')
+    script(type='text/javascript', src='bower_components/angular-route/angular-route.js')
+    script(type='text/javascript', src='bower_components/angular-sanitize/angular-sanitize.min.js')
+    script(type='text/javascript', src='bower_components/tv4/tv4.js')
+    script(type='text/javascript', src='bower_components/objectpath/lib/ObjectPath.js')
+    script(type='text/javascript', src='bower_components/angular-schema-form/dist/schema-form.min.js')
+    script(type='text/javascript', src='bower_components/angular-schema-form/dist/bootstrap-decorator.min.js')
+    script(src="/js/app.js")
+    script(src="/js/formDataService.js")
+    script(src="/js/studentStorageService.js")
+    script(src="/js/coopAdminController.js")
+    
+
+    
+  body(ng-app='coopAdmin')
+    nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+      .navbar-header
+        a.navbar-brand(href='#/') Coop Admin
+    data-ng-view
