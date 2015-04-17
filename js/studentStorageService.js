@@ -16,11 +16,6 @@ app.service('studentStorageService', function($q) {
   this.save = function() {
     localStorage.setItem('coopStudents', JSON.stringify(this.data));
   };
-
-  // Send nothing, recieves a uuid
-  // wait can just be onclick in controller
-  
-  // still need an submit new student or something
   
   this.deleteStudent = function(student) {
     this.data.splice(_this.data.indexOf(student), 1);
@@ -35,7 +30,7 @@ app.service('studentStorageService', function($q) {
 	this.lookupStudents = function(key, val) {
 		var results = [];
 		angular.forEach(this.data, function(student){
-			if (student.key === val) results.push(student);
+			if (student[key] === val) results.push(student);
 		});
 		return results;
 	};

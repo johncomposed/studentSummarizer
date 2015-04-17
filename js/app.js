@@ -11,7 +11,7 @@ app.config(function($routeProvider) {
             .when('/', {
                 templateUrl:'views/dash.html',
                 controller: 'dashCtrl'
-            }).when('/:status/:uiid', {
+            }).when('/:status/:uuid', {
                 templateUrl:'views/form.html',
                 controller: 'formCtrl'
             })

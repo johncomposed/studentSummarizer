@@ -37,17 +37,18 @@ app.controller('formCtrl', function($scope, $location, $routeParams, formDataSer
   $scope.initFillForm = function() {
     if ($routeParams.status === "new") {
       $scope.model = {
-        "uuid": $routeParams.uuid
+        "uuid": parseInt($routeParams.uuid)
       };
     } else {
-      uuid = $routeParams.uuid;
-      $scope.model = $scope.storage.lookupStudents("uuid", uuid)[0]; // There better be only one with that uuid
+      var ruuid = $routeParams.uuid;
+      $scope.model = $scope.storage.lookupStudents("uuid", parseInt(ruuid))[0]; // There better be only one with that uuid
     }
   };
     
   $scope.saveForm=function(){
-      $scope.storage.addStudent($scope.model);
-      $location.path('/');
+    if ($routeParams.status === "new") $scope.storage.addStudent($scope.model);
+    else $scope.storage.save();
+    $location.path('/');
   };
   
 
