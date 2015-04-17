@@ -1,8 +1,11 @@
 #row(ng-init="initFillForm()")
-  .col-md-6
+  .col-md-6.noprint
     form
-      //p bla bla bla
-      div(sf-schema='schema', sf-form='form', sf-model='model', ng-submit='saveForm()')
-      button(type='button', ng-click='saveForm()') Save form
+      h2 Co-op Applicant Details
+      div(sf-schema='schema', sf-form='form', sf-model='model', ng-submit='saveForm()', sf-options='{ formDefaults: { onChange: "boldChanges(modelValue,form)"}}')
+      button.btn.btn-success(type='button', ng-click='saveForm()') Save form
+      button.btn.btn-info(type='button', ng-click='printBio()') Print Bio
+
+    br
   .col-md-6
     != partial("_formPreview")

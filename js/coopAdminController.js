@@ -12,13 +12,18 @@
 app.controller('dashCtrl', function($scope, $location, studentStorageService) {
   $scope.storage = studentStorageService;
   $scope.students = $scope.storage.data;
+  $scope.tableHead = ["Name of Applicant", "Date of Application", "GPA", "Interview Score", "Comments"];
 
   $scope.newStudent = function() {
     var newUUID = Date.now();
     $location.path("/new/" + newUUID);
   };
   
+
+  
 });
+
+
 
 
 
@@ -51,20 +56,33 @@ app.controller('formCtrl', function($scope, $location, $routeParams, formDataSer
     $location.path('/');
   };
   
+  $scope.printBio = function() {
+    window.print();
+  };
 
   // Functions for
-    $scope.boldChanges = function(thisClass) {
-      
-      var CLASS_NAME = "bold";
-      var oldBold = document.querySelectorAll("." + CLASS_NAME);
-      var newBold = document.querySelectorAll("." + thisClass);
-      //Removing
-      for(i = 0, l = oldBold.length; i < l; i++) {
-        oldBold[i].classList.remove(CLASS_NAME);
-      }
-      //Adding
-      for(i = 0, l = newBold.length; i < l; i++) {
-        newBold[i].classList.add(CLASS_NAME);
-      }
-    };
+  $scope.boldChanges = function(modelValue,form) {
+    var thisClass = form.key[0];
+    var CLASS_NAME = "bold";
+    var oldBold = document.querySelectorAll("." + CLASS_NAME);
+    var newBold = document.querySelectorAll("." + thisClass);
+    //Removing
+    for(i = 0, l = oldBold.length; i < l; i++) {
+      oldBold[i].classList.remove(CLASS_NAME);
+    }
+    //Adding
+    for(i = 0, l = newBold.length; i < l; i++) {
+      newBold[i].classList.add(CLASS_NAME);
+    }
+  };
+
+
+$scope.logme = function(modelValue,form) {
+  console.log(form.key[0]);
+};
+  
+  
+  
+  
+  
 });

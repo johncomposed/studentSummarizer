@@ -1,0 +1,27 @@
+@media print {
+  .noprint {
+    display:none;
+  }
+  .page {
+    width:7.5in;
+    padding:0 0.5in;
+  }
+  .print-sides {
+    padding:0.5in 0;
+  }
+  
+}
+
+
+.unbold {
+  font-weight:normal;
+}
+
+.bold {
+  font-weight:bolder;
+}
+
+
+.click {
+  cursor:pointer;
+}

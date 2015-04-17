@@ -1,1 +1,36 @@
-h3 hello form preview
+h2.noprint Applicant Bio Preview
+#output.margin.page(ng-show="model.name")
+  h1 SAMPLE
+  p.name
+    | {{model.name}} 
+    span.lname {{lname}} 
+    span.year(ng-show="model.year") is a {{year|numToYear}} 
+    span.year(ng-hide="model.year") is a student 
+    | at 
+    span.school {{model.school }}.
+  p(ng-show="model.gpa") 
+    span.gpa{{model.name}}'s GPA is a {{model.gpa}}/4.0
+    span.prevCoop(ng-show="model.prevCoop === 'false'") , and this will be 
+      span.name {{model.name}}
+      |'s first Coop
+    |.
+  p.prevCoop(ng-show="prevCoop === 'true'") {{fname}} has previously completed {{itemLength()}} Coops.
+  span(ng-show="prevCoop === 'true'")
+    table.table-bordered
+      thead
+        tr
+          th Company Name
+          th Tenure (Months)
+          th Duties (Optional)
+      tbody
+        tr.newRow(ng-repeat="item in list.items")
+          th(class="unbold itemName{{$index}}") {{item.name}}
+          th(class="unbold itemTenure{{$index}}") {{item.tenure}}
+          th(class="unbold itemDuties{{$index}}") {{item.duties}}
+  p.interview(ng-show="interview === 'false'") {{fname}} has not yet been interviewed. 
+  p.interview(ng-show="interview === 'true'") {{fname}} was interviewed
+    span.ivdate(ng-show="ivdate")  on {{ivdate}}
+    span.ivname(ng-show="ivname")  by {{ivname}}
+    |.
+
+
