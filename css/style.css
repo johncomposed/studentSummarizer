@@ -9,6 +9,9 @@
   .print-sides {
     padding:0.5in 0;
   }
+  .bold {
+    font-weight:normal;
+  }
   
 }
 
