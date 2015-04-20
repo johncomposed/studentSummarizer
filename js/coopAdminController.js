@@ -62,6 +62,7 @@ app.controller('formCtrl', function($scope, $location, $routeParams, formDataSer
 
   // Functions for
   $scope.boldChanges = function(modelValue,form) {
+    //console.log(form.key[0]);
     var thisClass = form.key[0];
     var CLASS_NAME = "bold";
     var oldBold = document.querySelectorAll("." + CLASS_NAME);
