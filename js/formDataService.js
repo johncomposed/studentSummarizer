@@ -92,7 +92,7 @@ app.service('formDataService', function($q) {
         "type": "string",
         "enum": ["Very Poor", "Poor", "Moderate", "Good", "Excellent"]
       },
-      "required": ["name", "email", "comment"]
+      "required": ["name", "email", "comment", "hadcoop", "hadinterview"]
     }
   };
   

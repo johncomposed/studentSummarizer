@@ -1,13 +1,46 @@
 @media print {
+  /*Padding and margin resets*/
+  body, * {
+    padding:0px !important;
+    margin: 0px !important;
+  }
+
+  p {
+    margin: 0 0 10.5px !important;
+  }
+  h1 {
+    margin: 0.67em 0;
+  }
+  h2 {
+    margin: 0.83em 0;
+  }
+  h3 {
+    margin: 1em 0;
+  }
+  h4,h5,h6 {
+    margin: 1.33em 0;
+  }
+  
+  ol,ul {
+    margin: 1em 0;
+  }
+  
+  ol,ul {
+    padding: 0 0 0 40px;
+  }
+
+  /*Print styling*/
+  body {
+    border: 2px solid #000;
+  }
   .noprint {
     display:none;
   }
+
   .page {
     width:7.5in;
-    padding:0 0.5in;
-  }
-  .print-sides {
-    padding:0.5in 0;
+    height:9.75in;
+    padding:0.25in 0.5in 0 !important;
   }
   .bold {
     font-weight:normal;
@@ -28,3 +61,4 @@
 .click {
   cursor:pointer;
 }
+

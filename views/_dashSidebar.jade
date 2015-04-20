@@ -1,4 +1,25 @@
 .nav.navbar-nav.side-nav
     .col-sm-12
       h2 Filter Views
-      h1 SAMPLE
+      
+      h4 Name:
+      input(type='text', ng-model='searchText.name')
+
+      h4 GPA over:
+      input(type='number', ng-model='searchNum')
+      
+      h4 First Coop:
+      .btn-group
+        label.btn.btn-success(ng-class="{ active: 'Yes' === searchText['hadcoop'] }")
+          input(type='radio', ng-model="searchText['hadcoop']", style='display: none;', value='Yes')
+          | Yes 
+        label.btn.btn-default(ng-class="{ active: 'No' === searchText['hadcoop'] }")
+          input(type='radio',  ng-model="searchText['hadcoop']", style='display: none;', value='No')
+          | No
+
+      
+
+//-     input(type='text', ng-model='searchText[selectedSearch]')
+ //-     select(ng-model='selectedSearch')
+ //-       option(value='name') Name
+ //-       option(value='gpa') Gpa
