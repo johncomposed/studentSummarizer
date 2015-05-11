@@ -1,0 +1,16 @@
+h2.noprint Applicant Bio Preview
+#output.margin.page(ng-show="model.name")
+  h1 SAMPLE
+  p.name
+    | {{model.name}} 
+    span.year(ng-show="model.year") is a {{model.year}} 
+    span.year(ng-hide="model.year") is a {{model.year}} 
+    | at 
+    span.school {{model.school }} who applied on
+    | 
+    span.date {{model.date}}.
+    
+  p(ng-show="model.gpa") 
+    span.gpa{{model.name}}'s GPA is a {{model.gpa}}/4.0
+     
+  
