@@ -94,7 +94,7 @@ app.service('formDataService', function($q) {
       },
       "required": ["name", "email", "comment", "hadcoop", "hadinterview"]
     }
-  };
+  }; //end this.schema
   
   
   this.form = [{
@@ -243,6 +243,104 @@ app.service('formDataService', function($q) {
         }]
       }]
     }]
-  }];
-  //end service
-});
+  }]; // end this.form
+  
+  this.preview = {
+    paragraphs: [
+    {
+      model: "name",
+      tag: "p",
+      showtext: "{{model.name}} is a ",
+      children : [
+        {
+          model: "year",
+          tag: "span",
+          showtext: "{{model.year}} ",
+          hidetext: "student "
+        },
+        {
+          model: "school",
+          tag: "span",
+          showtext: "at {{model.school}} ",
+        }, 
+        {
+          model: "date",
+          tag: "span",
+          showtext: "who applied on {{model.date}} ",
+        }
+      ]
+    },
+    {
+      model: "gpa",
+      tag: "p",
+      showtext: "{{model.name}}'s GPA is {{model.gpa}}/4.0. "
+    },
+    {
+      model: "hadinterview",
+      show: "model.hadinterview === 'Yes'",
+      tag: "span",
+      showtext: "{{model.name}} ",
+      hidetext: "{{model.name}} has not had an interview. ",
+      children: [
+        {
+          model: "interviewscore",
+          tag: "span",
+          showtext: "had an overall {{model.interviewscore}} interview. "
+        },
+        {
+          model: "likable",
+          tag: "span",
+          showtext: "{{model.name}} performed {{model.likable}} in his interview. ",
+        }, 
+        {
+          model: "technical",
+          tag: "span",
+          showtext: "{{model.name}} demonstrated {{model.technical}} technical competence. ",
+        }
+      ]
+    },
+    {
+      model: "hadcoop",
+      show: "model.hadcoop === 'Yes'",
+      tag: "p",
+      showtext: "{{model.name}} has had ",
+      hidetext: "{{model.name}} has had no prior coops",
+      children: [
+        {
+          model: "numbercoop",
+          show: "model.numbercoop > '1'",
+          tag: "span",
+          hidetext: "one previous coop. ",
+          showtext: "{{model.numbercoops}} coops before. "
+        },
+        {
+          model: "cooplocation",
+          tag: "span",
+          showtext: "{{model.name}} did his last co-op at {{model.cooplocation}} "
+        },
+        {
+          model: "cooplocation",
+          tag: "span",
+          showtext: "as a {{model.cooptitle}}. ",
+          hidetext: "."
+        },
+        {
+          model: "cooprelevance",
+          tag: "span",
+          showtext: "The job may be considered {{model.cooprelevance}} to this job. ",
+        }
+      ]
+    },
+    {
+      model: "email",
+      tag: "p",
+      showtext: "{{model.name}} can be reached at {{model.email}}"
+    },
+    {
+      model: "comment",
+      tag: "p",
+      showtext: "Other notes: {{model.comment}}"
+    }
+  ]}; // end this.preview
+  
+}); //end service

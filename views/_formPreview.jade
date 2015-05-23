@@ -1,45 +1,8 @@
 h2.noprint Applicant Bio Preview
 #output.margin.page(ng-show="model.name")
-  p.name
-    | {{model.name}} is a
-    span.year(ng-hide="model.year") 
-      | student 
-    span.year(ng-show="model.year") 
-      | {{model.year}} 
-    | at 
-    span.school 
-      | {{model.school}}
-    span.date(ng-show="model.date") 
-      | who applied on {{model.date}} 
-    | .   
-  p.gpa(ng-show="model.gpa") 
-    | {{model.name}}'s GPA is a {{model.gpa}}/4.0.
-  p.hadinterview(ng-show="model.hadinterview === 'Yes'")
-    | {{model.name}} 
-    span.interviewscore(ng-hide="model.interviewscore") 
-      | has had an 
-    span.interviewscore(ng-show="model.interviewscore") 
-      | had an overall {{model.interviewscore}} 
-    | interview. 
-    span.likeable(ng-show="model.likeable") 
-      | {{model.name}} did {{model.likeable}} in his interview.
-    span.technical(ng-show="model.technical") 
-      | {{model.name}} demonstrated {{model.technical}} technical competence. 
-  p.hadcoop(ng-show="model.hadcoop === 'Yes'")
-    | {{model.name}} has had 
-    span.numbercoops(ng-show="model.numbercoops == '1'") 
-      | a co-op 
-    span.numbercoops(ng-hide="model.numbercoops == '1'") 
-      | {{model.numbercoops}} co-ops 
-    | before.
-    span.cooplocation(ng-show="model.cooplocation") 
-      | {{model.name}} did his last co-op at {{model.cooplocation}}
-      span.cooptitle(ng-show="model.cooptitle") 
-        | as a {{model.cooptitle}}
-      | .
-    span.cooprelevance(ng-show="model.cooprelevance") 
-      | The job may be considered {{model.cooprelevance}} to this job.
-  p.email(ng-show="model.email") 
-    | {{model.name}} can be reached at {{model.email}}
-  p.comment(ng-show="model.comment") 
-    | Other notes: {{model.comment}}
+  p(ng-if='preview.paragraphs', ng-repeat='item in preview.paragraphs', class="{{item.model}}")
+    span(ng-if='item.hidetext && !showText(item)', bind-unsafe-html="item.hidetext")
+    span(ng-if='showText(item)', bind-unsafe-html="item.showtext") 
+    span(ng-if="showText(item)", ng-repeat='kid in item.children', class="{{kid.model}}") 
+      span(ng-if='kid.hidetext && !showText(kid)', bind-unsafe-html="kid.hidetext")
+      span(ng-if='showText(kid)', bind-unsafe-html="kid.showtext") 

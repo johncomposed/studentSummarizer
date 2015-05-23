@@ -29,7 +29,7 @@ app.controller('dashCtrl', function($scope, $location, studentStorageService) {
     };
   };
 
-  
+
   
   
 });
@@ -42,10 +42,12 @@ app.controller('dashCtrl', function($scope, $location, studentStorageService) {
 //////////////////////
 // Form page
   
-app.controller('formCtrl', function($scope, $location, $routeParams, formDataService, studentStorageService) {
+app.controller('formCtrl', function($scope, $location, $routeParams, formDataService, studentStorageService, $parse) {
   $scope.storage = studentStorageService;
   $scope.schema = formDataService.schema;
   $scope.form = formDataService.form;
+  $scope.preview = formDataService.preview;
+
   
   //  This is going to run when the page loads due to
   //  data-ng-init="initFillForm()"
@@ -67,10 +69,10 @@ app.controller('formCtrl', function($scope, $location, $routeParams, formDataSer
     $location.path('/');
   };
   
-  $scope.printBio = function() {
+ 
+ $scope.printBio = function() {
     window.print();
   };
-
   // Functions for
   $scope.boldChanges = function(modelValue,form) {
     //console.log(form.key[0]);
@@ -79,7 +81,7 @@ app.controller('formCtrl', function($scope, $location, $routeParams, formDataSer
     var oldBold = document.querySelectorAll("." + CLASS_NAME);
     var newBold = document.querySelectorAll("." + thisClass);
     //Removing
-    for(i = 0, l = oldBold.length; i < l; i++) {
+    for(var i = 0, l = oldBold.length; i < l; i++) {
       oldBold[i].classList.remove(CLASS_NAME);
     }
     //Adding
@@ -88,13 +90,81 @@ app.controller('formCtrl', function($scope, $location, $routeParams, formDataSer
     }
   };
 
+  $scope.pdfMaker = function() {
+    var previewArray = $scope.preview.paragraphs;
+    var loadContent = $scope.parsePreviewArray(previewArray);
 
-$scope.logme = function(modelValue,form) {
-  console.log(form.key[0]);
-};
+    var doc = {
+        content: loadContent
+    };
+    console.log(doc);
+    pdfMake.createPdf(doc).open();
+  }; 
+
+  // Ew. Well, now that I know this works I want a better way to do it. 
+  $scope.parsePreviewArray = function(array) {
+    var content = [];
+    var unparse = function(string) {
+      return string.replace(/(\{\{)(.*?)(\}\})/g, (function(v0, v1, v2) { return $scope.modelParse(v2); }));    
+    };
+    
+    for(var i = 0; i < array.length; i++) {
+      var paragraph = {text: []};
+      if ($scope.showText(array[i])) {
+        paragraph.text.push(unparse(array[i].showtext));
+        if (array[i].children) {
+          var kids = $scope.parsePreviewArray(array[i].children);
+          for(var l = 0; l < kids.length; l++) {
+            paragraph.text.push.apply(paragraph.text, kids[l].text);
+          }
+        }
+      } else if (array[i].hidetext) {
+        paragraph.text.push(unparse(array[i].hidetext));
+      }
+      content.push(paragraph);
+    }
+    return content;
+  };
+
+
+  $scope.logme = function(modelValue,form) {
+    console.log(form.key[0]);
+  };
   
   
   
+  $scope.modelParse = function(string) {
+    var scope = $scope;
+    return $parse(string)(scope);
+  };
   
+  
+  $scope.showText = function(item) {
+    var noShowVal = item.show === undefined;
+    var noItemShow = item.model && noShowVal;
+    return $scope.modelParse(item.show) || noItemShow;
+    
+  };
   
 });
+
+
+app.directive('bindUnsafeHtml', ['$compile',
+  function($compile) {
+    return function(scope, element, attrs) {
+      scope.$watch(
+        function(scope) {
+          // watch 'bindUnsafeHtml' for changes
+          return scope.$eval(attrs.bindUnsafeHtml);
+        },
+        function(value) {
+          //when'bindUnsafeHtml' changes assign to current dom
+          element.html(value);
+          // compile new DOM and link to current scope
+          // NOTE: only compile .childNodes to prevent infinite loop
+          $compile(element.contents())(scope);
+        }
+      );
+    };
+  }
+]);

@@ -5,7 +5,7 @@
       div(sf-schema='schema', sf-form='form', sf-model='model', ng-submit='saveForm()', sf-options='{ formDefaults: { onChange: "boldChanges(modelValue,form)"}}')
       button.btn.btn-success(type='button', ng-click='saveForm()') Save form
       button.btn.btn-info(type='button', ng-click='printBio()') Print Bio
-
+      button.btn.btn-warning(type='button', ng-click='pdfMaker()') Print with PDFmake
     br
   .col-md-6
     != partial("_formPreview")
