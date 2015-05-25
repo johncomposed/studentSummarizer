@@ -91,38 +91,33 @@ app.controller('formCtrl', function($scope, $location, $routeParams, formDataSer
   };
 
   $scope.pdfMaker = function() {
-    var previewArray = $scope.preview.paragraphs;
-    var loadContent = $scope.parsePreviewArray(previewArray);
+    var loadContent = $scope.parsePreviewArray();
 
     var doc = {
         content: loadContent
     };
-    console.log(doc);
+    console.log("Doc for printing: ", doc);
     pdfMake.createPdf(doc).open();
   }; 
 
-  // Ew. Well, now that I know this works I want a better way to do it. 
-  $scope.parsePreviewArray = function(array) {
+  // Good enough. I really should just do it server side anyway. 
+  $scope.parsePreviewArray = function() {
     var content = [];
-    var unparse = function(string) {
-      return string.replace(/(\{\{)(.*?)(\}\})/g, (function(v0, v1, v2) { return $scope.modelParse(v2); }));    
-    };
-    
-    for(var i = 0; i < array.length; i++) {
-      var paragraph = {text: []};
-      if ($scope.showText(array[i])) {
-        paragraph.text.push(unparse(array[i].showtext));
-        if (array[i].children) {
-          var kids = $scope.parsePreviewArray(array[i].children);
-          for(var l = 0; l < kids.length; l++) {
-            paragraph.text.push.apply(paragraph.text, kids[l].text);
-          }
+    var rootNodes = document.querySelectorAll("#output > *"); // Mostly <p>, but might be tables in future
+
+    for(var i = 0; i < rootNodes.length; i++) {
+      var textObject = {text: []};
+      var kids = rootNodes[i].children;
+
+      for(var k = 0; k < kids.length; k++) {
+        if(kids[k].innerText) {
+          textObject.text.push(kids[k].innerText);
         }
-      } else if (array[i].hidetext) {
-        paragraph.text.push(unparse(array[i].hidetext));
       }
-      content.push(paragraph);
+      
+      content.push(textObject);
     }
+    
     return content;
   };
 
@@ -162,6 +157,7 @@ app.directive('bindUnsafeHtml', ['$compile',
           element.html(value);
           // compile new DOM and link to current scope
           // NOTE: only compile .childNodes to prevent infinite loop
+
           $compile(element.contents())(scope);
         }
       );
